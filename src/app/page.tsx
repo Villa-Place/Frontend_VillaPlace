@@ -170,8 +170,8 @@ const HomePage = () => {
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
           <h1 className="text-5xl font-bold mb-8">VILLAPLACE</h1>
-          <p className="text-2xl mb-2">Lorem ipsum lagi</p>
-          <p className="text-2xl mb-8">Ntah ini isi aja bang</p>
+          <p className="text-2xl mb-2">Selamat Datang!</p>
+          <p className="text-2xl mb-8">Tempatnya Mencari Villa Idaman. <br/> Silahkan mulai penelusuran anda dengan VillaPlace.</p>
           <div className="w-full max-w-2xl px-4">
             <div className="flex">
               <input

@@ -20,7 +20,7 @@
     "clsx": "^2.1.1",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.456.0",
-    "next": "^15.0.2",
+    "next": "^15.0.3",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.5.4",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",

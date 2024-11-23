@@ -8,6 +8,7 @@ const useFetchData = (url: string, options?: AxiosRequestConfig) => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -20,7 +21,7 @@ const useFetchData = (url: string, options?: AxiosRequestConfig) => {
       }
     };
     fetchData();
-  }, []);
+  }, [url, options]);
 
   return { data, loading, error };
 };

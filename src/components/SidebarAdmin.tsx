@@ -140,10 +140,10 @@ const SidebarAdmin = () => {
               </Link>
             </li>
             <li>
-              <Link href={"/profile/favorite"}>
+              <Link href={"/profile/riwayat"}>
                 <div
                   className={`${
-                    pathname.includes("favorite")
+                    pathname.includes("riwayat")
                       ? "bg-[#089562] hover:bg-opacity-40 bg-opacity-30 dark:bg-opacity-30"
                       : "hover:bg-zinc-100 hover:bg-opacity-100"
                   } flex w-full max-w-full items-center justify-between py-3 pl-8 font-medium text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900`}
@@ -168,7 +168,7 @@ const SidebarAdmin = () => {
                       </svg>
                     </div>
                     <p className="mr-auto text-md font-semibold text-zinc-950 dark:text-zinc-400">
-                      Favorite
+                      Riwayat
                     </p>
                   </div>
                 </div>

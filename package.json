@@ -11,20 +11,39 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@fortawesome/fontawesome-svg-core": "^6.7.1",
+    "@fortawesome/free-brands-svg-icons": "^6.7.1",
+    "@fortawesome/free-regular-svg-icons": "^6.7.1",
+    "@fortawesome/free-solid-svg-icons": "^6.7.1",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/icons-material": "^6.1.7",
     "@mui/material": "^6.1.7",
     "@mui/utils": "^6.1.7",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
+    "formik": "^2.4.6",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.456.0",
     "next": "^15.0.3",
+<<<<<<< HEAD
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
+=======
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sweetalert2": "^11.14.5",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7",
+    "yup": "^1.4.0"
+>>>>>>> main
   },
   "devDependencies": {
     "@types/node": "^20",

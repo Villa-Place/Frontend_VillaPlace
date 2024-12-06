@@ -32,7 +32,7 @@ const LoginForm = () => {
         if (isUser) {
           router.push("/");
         } else {
-          router.push("/dashboard");
+          router.push("/dashboardMitra");
         }
       }
     } catch (error: any) {

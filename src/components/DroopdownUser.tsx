@@ -78,12 +78,12 @@ const DropdownUser: React.FC = () => {
               {/* <span className="block text-xs">{user.data.email}</span> */}
             </span>
 
-            <span className="h-12 w-12 rounded-full">
+            <span className="h-12 w-12 rounded-full border">
               <Image
                 width={112}
                 height={112}
                 src={`http://localhost:8000/images/user-profile/${data.data.foto_profile}`}
-                className="rounded-full"
+                className="rounded-full object-cover w-full h-full"
                 alt="User"
               />
             </span>
@@ -117,8 +117,8 @@ const DropdownUser: React.FC = () => {
             <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
               <li>
                 <Link
-                  href="/profile/user"
-                  className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+                  href="/user/profile"
+                  className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-[#089562] lg:text-base"
                 >
                   <svg
                     className="fill-current"
@@ -142,8 +142,8 @@ const DropdownUser: React.FC = () => {
               </li>
               <li>
                 <Link
-                  href="/profile/bookings"
-                  className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+                  href="/user/bookings"
+                  className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-[#089562] lg:text-base"
                 >
                   <svg
                     className="fill-current"
@@ -164,7 +164,7 @@ const DropdownUser: React.FC = () => {
             </ul>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+              className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium text-red-600 duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
                 className="fill-current"

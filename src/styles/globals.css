@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -63,4 +64,95 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.box {
+	box-shadow: var(--NN200, #d6dfeb) 0px 1px 6px 0px;
+}
+
+.box-1 {
+	border-top: 1px solid var(--NN300, #bfc9d9);
+	border-bottom: 1px solid var(--NN300, #bfc9d9);
+}
+
+.box-2 {
+	max-width: 1080px;
+	margin: 0px 0px 0px 24px;
+	padding: 16px;
+	border-radius: 6px;
+	border: 1px solid rgb(224, 224, 224);
+}
+
+.line-bottom {
+	border-bottom: 1px solid var(--NN300, #bfc9d9);
+}
+
+.line-top {
+	border-top: 1px solid var(--NN300, #bfc9d9);
+}
+
+.box-3 {
+	display: block;
+	position: relative;
+	padding: 16px;
+	border-radius: 8px;
+	/* border-color: var(--NN200, #d6dfeb); */
+	box-shadow: 0 1px 4px rgba(141, 150, 170, 0.4);
+	background-color: var(--NN0, #ffffff);
+	cursor: default;
+}
+
+.font-bold {
+	font-weight: bold !important;
+}
+
+.border-black {
+	border-color: black !important;
+}
+
+.item-content {
+	flex-grow: 1;
+	width: calc(100% - 180px);
+}
+
+.border-line {
+	border-left: 1px solid var(--NN300, #bfc9d9);
+}
+
+.photo {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 12px;
+}
+
+.border-bawah {
+	border-bottom: 1px solid var(--NN300, #bfc9d9);
+}
+
+.box-payment {
+	display: block;
+	position: relative;
+	padding: 8px 12px;
+	border-radius: 8px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--NN200, #d6dfeb);
+	background-color: var(--NN0, #ffffff);
+	cursor: pointer;
+}
+
+.number-payment {
+	display: inline-block;
+	padding: 0px 4px;
+	min-width: 15px;
+	line-height: 16px;
+	font-size: 0.714286rem;
+	font-weight: 700;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	border-radius: 6px;
+	background: var(--RN600, #e02954);
+	box-sizing: border-box;
 }

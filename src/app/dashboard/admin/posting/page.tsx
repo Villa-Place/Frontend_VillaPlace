@@ -349,7 +349,9 @@ const PostingMitra = () => {
                                 />
                               </td>
                               <td className="p-3 text-center justify-center gap-5">
-                                <Link href="/editVilla">
+                                <Link
+                                  href={`/dashboard/admin/posting/editVilla/${data._id}`}
+                                >
                                   <button
                                     // href={`/edit/${index}`}
                                     className="text-blue-500 hover:text-blue-700"

@@ -1,12 +1,13 @@
-// !
+//!
 "use client";
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useParams } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup"; // Import Yup for validation
 import Select from "react-select"; // Import react-select
+import Image from "next/image";
 interface Villa {
   nama: string;
   deskripsi: string;
@@ -15,13 +16,13 @@ interface Villa {
   harga: number;
   kamar: number;
   kamar_mandi: number;
-  foto_villa: string[];
+  foto_villa: { url: string; _id: string }[];
   fasilitas: [];
 }
 
 const VillaForm = () => {
   const { id } = useParams();
-
+  const [images, setImages] = useState<{ file: File; timestamp: number }[]>([]);
   const validationSchema = Yup.object({
     nama: Yup.string().required("Nama Villa harus diisi."),
     lokasi: Yup.string().required("Lokasi harus diisi."),
@@ -64,8 +65,8 @@ const VillaForm = () => {
         const data = response.data.data;
         setVilla({
           ...data,
-          kamar: Number(data.kamar) || 0, // Ensure no NaN
-          kamar_mandi: Number(data.kamar_mandi) || 0, // Ensure no NaN
+          kamar: parseInt(data.fasilitas[0].match(/\d+/)[0]), // Pastikan tipe number
+          kamar_mandi: parseInt(data.fasilitas[1].match(/\d+/)[0]), // Pastikan tipe number
         });
       } catch (error) {
         console.error(error);
@@ -101,7 +102,7 @@ const VillaForm = () => {
           title: "Villa Updated!",
           text: "Your villa has been successfully updated.",
         }).then(() => {
-          window.location.href = "/posting-mitra";
+          window.location.href = "/dashboard/admin/posting";
         });
       } catch (error) {
         Swal.fire({
@@ -112,7 +113,15 @@ const VillaForm = () => {
       }
     },
   });
-
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files).map((file) => ({
+        file,
+        timestamp: Date.now(),
+      }));
+      setImages((prevImages) => [...prevImages, ...files]);
+    }
+  };
   const handleArrayChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     field: "kategori"
@@ -140,6 +149,40 @@ const VillaForm = () => {
       "fasilitas",
       selectedOptions.map((option: any) => option.value)
     );
+  };
+  const handleReplaceImage = async (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      const files = Array.from(e.target.files).map((file) => ({
+        file,
+        timestamp: Date.now(),
+        photoId: villa.foto_villa[index]._id,
+      }));
+
+      const res = await axios.put(
+        `http://localhost:8000/api/villa/${id}/edit-villa-images/${villa.foto_villa[index]._id}`,
+        { foto_villa: files[0].file, photoId: files[0].photoId },
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
+        }
+      );
+
+      setImages((prevImages) => [...prevImages, ...files]);
+
+      // setVilla((prevVilla) => {
+      //   const updatedFotoVilla = [...prevVilla.foto_villa];
+      //   updatedFotoVilla[index] = {
+      //     url: URL.createObjectURL(file),
+      //     _id: villa.foto_villa[index]._id,
+      //   };
+      //   return { ...prevVilla, foto_villa: updatedFotoVilla };
+      // });
+    }
   };
   return (
     <div className="max-w-5xl mx-auto p-8 bg-white border shadow-xl rounded-md my-16">
@@ -297,6 +340,46 @@ const VillaForm = () => {
           {formik.touched.kategori && formik.errors.kategori && (
             <div className="text-red-500 text-sm">{formik.errors.kategori}</div>
           )}
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium">Upload Galeri</label>
+          <div className="flex space-x-4">
+            {villa.foto_villa.map((img, index) => (
+              <div key={index} className="relative w-24 h-24">
+                <Image
+                  src={img.url}
+                  alt={`Preview ${index + 1}`}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-md cursor-pointer"
+                  onClick={() =>
+                    document.getElementById(`replace-image-${index}`)?.click()
+                  }
+                />
+                <input
+                  id={`replace-image-${index}`}
+                  type="file"
+                  onChange={(e) => handleReplaceImage(e, index)}
+                  accept="image/*"
+                  className="hidden"
+                />
+              </div>
+            ))}
+            <label
+              htmlFor="gallery-upload"
+              className="w-24 h-24 border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-500 cursor-pointer rounded-md"
+            >
+              +
+              <input
+                id="gallery-upload"
+                type="file"
+                multiple
+                onChange={handleImageUpload}
+                accept="image/*"
+                className="hidden"
+              />
+            </label>
+          </div>
         </div>
         <div className="mt-6">
           <button

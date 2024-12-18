@@ -1,4 +1,6 @@
-# VillaPlace - Frontend
+# Frontend VillaPlace
+
+[![Deploy](https://github.com/Villa-Place/Frontend_VillaPlace/actions/workflows/main.yml/badge.svg)](https://github.com/Villa-Place/Frontend_VillaPlace/actions/workflows/main.yml)
 
 🏡 **Selamat Datang di VillaPlace!** 
 VillaPlace adalah aplikasi **frontend modern** yang dirancang untuk mengelola dan menelusuri sewa villa dengan **mudah, cepat, dan responsif**. Dibangun menggunakan teknologi terkini, proyek ini berfokus pada performa tinggi, pengalaman pengguna yang menyenangkan, dan desain yang ramah semua perangkat.

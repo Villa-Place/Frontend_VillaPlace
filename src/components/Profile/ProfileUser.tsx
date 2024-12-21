@@ -6,8 +6,15 @@ import ProfileDisplay from "./ProfileDisplay";
 import EditProfileModal from "./EditProfileModal";
 import useFetchData from "../../hooks/useFetchData";
 import { useFetchUser } from "../../hooks/useFetchUser";
-import { User } from "../../types/User";
 import Swal from "sweetalert2";
+import { FormikHelpers } from "formik";
+
+interface UserData {
+  _id: string;
+  nama: string;
+  email: string;
+  no_telepon: string;
+}
 
 const ProfileUser = () => {
   const { handleUpdateUser, error } = useFetchUser();
@@ -30,8 +37,13 @@ const ProfileUser = () => {
   }, [data]);
 
   const handleUpdate = async (
-    values: Omit<User, "_id">,
-    formikHelpers: any
+    values: Omit<UserData, "_id">,
+    formikHelpers: FormikHelpers<{
+      _id: string;
+      nama: string;
+      email: string;
+      no_telepon: string;
+    }>
   ) => {
     try {
       const updatedUser = await handleUpdateUser(userData._id, values);
@@ -50,6 +62,7 @@ const ProfileUser = () => {
           icon: "error",
           confirmButtonText: "OK",
         });
+        console.error(err);
       }
     }
   };
@@ -62,7 +75,7 @@ const ProfileUser = () => {
         {showModal && (
           <EditProfileModal
             userData={userData}
-            onSubmit={(values: any, formikHelpers: any) =>
+            onSubmit={(values: Omit<UserData, "_id">, formikHelpers) =>
               handleUpdate(values, formikHelpers)
             }
             onClose={() => setShowModal(false)}

@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import axios, { AxiosRequestConfig } from "axios";
 
+// interface FetchData {
+//   message: string;
+//   status: string;
+// }
+
 const useFetchData = (url: string, options?: AxiosRequestConfig) => {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<null | any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 

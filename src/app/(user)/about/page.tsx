@@ -7,7 +7,7 @@ import {
   faLock,
   faStar,
   faTrophy,
-  faHeart
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const metadata: Metadata = {
@@ -23,9 +23,17 @@ const About = () => {
         <section className="px-8 py-16 md:px-16 lg:px-24">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="md:w-1/2 lg:pr-16">
-              <h2 className="text-4xl text-gray-800 font-bold mb-6">About Us</h2>
+              <h2 className="text-4xl text-gray-800 font-bold mb-6">
+                About Us
+              </h2>
               <p className="text-base text-gray-700 font-semibold leading-relaxed text-justify">
-              Villaplace adalah platform pemesanan villa eksklusif yang menghadirkan pengalaman menginap terbaik di berbagai destinasi wisata favorit. Kami berkomitmen untuk memberikan kenyamanan, pelayanan istimewa, dan kenangan tak terlupakan bagi setiap tamu. Dengan pilihan villa yang dirancang untuk memenuhi kebutuhan Anda, Villaplace siap menjadi mitra perjalanan yang selalu dapat diandalkan.
+                Villaplace adalah platform pemesanan villa eksklusif yang
+                menghadirkan pengalaman menginap terbaik di berbagai destinasi
+                wisata favorit. Kami berkomitmen untuk memberikan kenyamanan,
+                pelayanan istimewa, dan kenangan tak terlupakan bagi setiap
+                tamu. Dengan pilihan villa yang dirancang untuk memenuhi
+                kebutuhan Anda, Villaplace siap menjadi mitra perjalanan yang
+                selalu dapat diandalkan.
               </p>
             </div>
             <div className="md:w-1/2 shadow-2xl">
@@ -60,11 +68,26 @@ const About = () => {
               </h2>
               <h3 className="font-bold text-xl mb-2 text-white-700">Visi</h3>
               <p className="text-base leading-relaxed text-justify">
-              Menjadi platform pemesanan villa terdepan di Indonesia, dikenal karena kualitas layanan, kenyamanan, dan dedikasi terhadap keberlanjutan. Kami bertujuan menciptakan pengalaman liburan autentik dan penuh kesan yang selalu diingat oleh tamu kami.
+                Menjadi platform pemesanan villa terdepan di Indonesia, dikenal
+                karena kualitas layanan, kenyamanan, dan dedikasi terhadap
+                keberlanjutan. Kami bertujuan menciptakan pengalaman liburan
+                autentik dan penuh kesan yang selalu diingat oleh tamu kami.
               </p>
-              <h3 className="font-bold text-xl mt-6 mb-2 text-white-700">Misi</h3>
+              <h3 className="font-bold text-xl mt-6 mb-2 text-white-700">
+                Misi
+              </h3>
               <p className="text-base leading-relaxed text-justify">
-                Kami berkomitmen untuk menyediakan akomodasi villa berkualitas tinggi dengan layanan yang ramah, profesional, dan personal, demi menciptakan pengalaman menginap yang nyaman dan aman bagi setiap tamu. Dengan mengutamakan keberlanjutan, kami menjalankan praktik operasional yang bertanggung jawab untuk melestarikan alam dan budaya lokal. Villaplace hadir untuk memperkenalkan keindahan alam dan kekayaan budaya Indonesia kepada dunia, memungkinkan tamu merasakan liburan yang autentik dan bermakna. Kami terus berinovasi untuk memastikan Villaplace menjadi pilihan utama wisatawan dalam mencari pengalaman menginap yang tak terlupakan di villa-villa terbaik Indonesia.
+                Kami berkomitmen untuk menyediakan akomodasi villa berkualitas
+                tinggi dengan layanan yang ramah, profesional, dan personal,
+                demi menciptakan pengalaman menginap yang nyaman dan aman bagi
+                setiap tamu. Dengan mengutamakan keberlanjutan, kami menjalankan
+                praktik operasional yang bertanggung jawab untuk melestarikan
+                alam dan budaya lokal. Villaplace hadir untuk memperkenalkan
+                keindahan alam dan kekayaan budaya Indonesia kepada dunia,
+                memungkinkan tamu merasakan liburan yang autentik dan bermakna.
+                Kami terus berinovasi untuk memastikan Villaplace menjadi
+                pilihan utama wisatawan dalam mencari pengalaman menginap yang
+                tak terlupakan di villa-villa terbaik Indonesia.
               </p>
             </div>
           </div>
@@ -80,70 +103,76 @@ const About = () => {
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="flex items-start space-x-3">
                   <div className="w-12 h-12 text-brown-500">
-                    <FontAwesomeIcon icon={faBroom}/>
+                    <FontAwesomeIcon icon={faBroom} />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-800">
                       Kebersihan Terjamin
                     </h3>
                     <p className="text-gray-700">
-                      Kami memastikan setiap villa selalu bersih dan higienis, sehingga Anda merasa nyaman dan aman selama menginap.
+                      Kami memastikan setiap villa selalu bersih dan higienis,
+                      sehingga Anda merasa nyaman dan aman selama menginap.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <div className="w-12 h-12 text-brown-500">
-                    <FontAwesomeIcon icon={faLock}/>
+                    <FontAwesomeIcon icon={faLock} />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-800">
                       Keamanan 24/7
                     </h3>
                     <p className="text-gray-700">
-                      Semua villa dilengkapi dengan sistem keamanan yang bekerja sepanjang waktu untuk melindungi Anda dan keluarga.
+                      Semua villa dilengkapi dengan sistem keamanan yang bekerja
+                      sepanjang waktu untuk melindungi Anda dan keluarga.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <div className="w-12 h-12 text-brown-500">
-                    <FontAwesomeIcon icon={faHeart}/>
+                    <FontAwesomeIcon icon={faHeart} />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-800">
                       Kenyamanan Maksimal
                     </h3>
                     <p className="text-gray-700">
-                      Nikmati ruang yang luas, fasilitas lengkap, dan desain interior yang dirancang untuk membuat Anda merasa seperti di rumah.
+                      Nikmati ruang yang luas, fasilitas lengkap, dan desain
+                      interior yang dirancang untuk membuat Anda merasa seperti
+                      di rumah.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <div className="w-12 h-12 text-brown-500">
-                    <FontAwesomeIcon icon={faStar}/>
+                    <FontAwesomeIcon icon={faStar} />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-800">
                       Pelayanan Ramah dan Profesional
                     </h3>
                     <p className="text-gray-700">
-                      Tim kami selalu siap membantu dengan sepenuh hati, memastikan setiap kebutuhan Anda terpenuhi.
+                      Tim kami selalu siap membantu dengan sepenuh hati,
+                      memastikan setiap kebutuhan Anda terpenuhi.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <div className="w-12 h-12 text-brown-500">
-                    <FontAwesomeIcon icon={faTrophy}/>
+                    <FontAwesomeIcon icon={faTrophy} />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-800">
                       Kualitas Terbaik
                     </h3>
                     <p className="text-gray-700">
-                      Kami memilih villa dengan teliti, menghadirkan yang terbaik untuk memenuhi harapan Anda.
+                      Kami memilih villa dengan teliti, menghadirkan yang
+                      terbaik untuk memenuhi harapan Anda.
                     </p>
                   </div>
                 </div>

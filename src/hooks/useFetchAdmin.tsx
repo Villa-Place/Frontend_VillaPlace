@@ -8,20 +8,22 @@ import {
 } from "../services/adminService";
 import { Admin } from "../types/Admin";
 import Swal from "sweetalert2";
+import { AxiosError } from "axios";
 
 export const useFetchAdmin = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null | unknown>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
   const handleDashboardData = async (query: string) => {
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
     try {
-      setLoading(true);
-      setError(null);
-      setSuccess(false);
       const result = await getDashboardData(query);
+      setSuccess(true);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -44,14 +46,17 @@ export const useFetchAdmin = () => {
       });
       setSuccess(true);
       return result;
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Gagal membuat admin");
-      Swal.fire({
-        title: "Error",
-        text: err.response?.data?.message || "Gagal membuat admin",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        Swal.fire({
+          title: "Error",
+          text: err.message || "Gagal membuat admin",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        setError(err || "Gagal membuat admin");
+        throw err;
+      }
       throw err;
     } finally {
       setLoading(false);
@@ -72,8 +77,10 @@ export const useFetchAdmin = () => {
       });
       setSuccess(true);
       return result;
-    } catch (err: any) {
-      setError(err);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        setError(err.message || "Gagal memperbarui admin");
+      }
       throw err;
     } finally {
       setLoading(false);
@@ -88,9 +95,9 @@ export const useFetchAdmin = () => {
     try {
       await changePassword(data);
       setSuccess(true);
-    } catch (err: any) {
-      if (err.errors) {
-        setError(err.errors);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        setError(err.message);
       }
 
       throw err;
@@ -116,15 +123,17 @@ export const useFetchAdmin = () => {
 
       setSuccess(true);
       return response;
-    } catch (err: any) {
-      Swal.fire({
-        title: "Error",
-        text: err.message || "Gagal menghapus admin.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        Swal.fire({
+          title: "Error",
+          text: err.message || "Gagal menghapus admin.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
 
-      setError(err);
+        setError(err.message);
+      }
       throw err;
     } finally {
       setLoading(false);

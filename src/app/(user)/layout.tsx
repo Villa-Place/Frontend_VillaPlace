@@ -10,7 +10,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
     <div className="bg-gray-100">
       <Navbar token={token} />
       <main>
-        <div >{children}</div>
+        <div>{children}</div>
       </main>
       <Footer />
     </div>

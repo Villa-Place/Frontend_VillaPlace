@@ -13,6 +13,15 @@ import generateBookingId from "@/utils/generateBookingId";
 import Swal from "sweetalert2";
 import Link from "next/link";
 
+interface AddBookingValue {
+  guests: number;
+  checkInDate: Date;
+  checkOutDate: Date;
+  total: number;
+  villa: { value: string; label: string };
+  fullName: string;
+  email: string;
+}
 interface Villa {
   _id: string;
   nama: string;
@@ -32,7 +41,7 @@ const PesananMitra = () => {
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [filteredData, setFilteredData] = useState<Booking[]>([]);
   const [search, setSearch] = useState("");
-  const [detailBooking, setDetailBooking] = useState<any>();
+  const [detailBooking, setDetailBooking] = useState<Booking>();
   const [villa, setVilla] = useState<Villa[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
@@ -112,7 +121,7 @@ const PesananMitra = () => {
     }
   }, [currentModalId]);
 
-  const toggleModal = (id: any) => {
+  const toggleModal = (id: string) => {
     setCurrentModalId(id);
     setIsModalOpen(!isModalOpen);
   };
@@ -133,7 +142,7 @@ const PesananMitra = () => {
     setSelectedStatus(selectedStatus);
   };
 
-  const handleAddBooking = async (values: any) => {
+  const handleAddBooking = async (values: AddBookingValue) => {
     const res = await handleCreateBookingOwner({
       jumlah_orang: values.guests,
       tanggal_mulai: values.checkInDate,
@@ -238,11 +247,11 @@ const PesananMitra = () => {
       </div>
       {isModalOpen && (
         <Modal
-          onClose={() => toggleModal(null)}
+          onClose={() => toggleModal("")}
           title="Detail Pesanan"
           className="max-h-screen overflow-y-auto h-3/4"
         >
-          <DetailBooking detailBooking={detailBooking} />
+          {detailBooking && <DetailBooking detailBooking={detailBooking} />}
         </Modal>
       )}
 

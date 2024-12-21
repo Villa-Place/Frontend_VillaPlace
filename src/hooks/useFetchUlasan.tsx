@@ -1,13 +1,35 @@
 import { useState } from "react";
-import { postUlasan, deleteUlasan } from "@/services/ulasanService";
+import {
+  postUlasan,
+  deleteUlasan,
+  getUlasanUser,
+} from "@/services/ulasanService";
 import Swal from "sweetalert2";
+import { AddUlasan } from "@/types/Ulasan";
+import { AxiosError } from "axios";
 
 export const useFetchUlasan = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null | unknown>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const handleFetchUlasan = async (data: any) => {
+  const handleGetUlasanUser = async () => {
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    try {
+      const response = await getUlasanUser();
+      setError(null);
+      setSuccess(true);
+      return response;
+    } catch (err) {
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleFetchUlasan = async (data: AddUlasan) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -25,14 +47,16 @@ export const useFetchUlasan = () => {
       setSuccess(true);
 
       return result;
-    } catch (err: any) {
-      Swal.fire({
-        title: "Error",
-        text: err.response?.data?.message || "Gagal menambahkan ulasan",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-      setError(err);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        Swal.fire({
+          title: "Error",
+          text: err.response?.data?.message || "Gagal menambahkan ulasan",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        setError(err.message);
+      }
       throw err;
     } finally {
       setLoading(false);
@@ -57,19 +81,28 @@ export const useFetchUlasan = () => {
       setSuccess(true);
 
       return result;
-    } catch (err: any) {
-      Swal.fire({
-        title: "Error",
-        text: err.response?.data?.message || "Gagal menghapus ulasan",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-      setError(err);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        Swal.fire({
+          title: "Error",
+          text: err.response?.data?.message || "Gagal menghapus ulasan",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        setError(err.message);
+      }
       throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  return { handleFetchUlasan, handleDeleteUlasan, loading, error, success };
+  return {
+    handleFetchUlasan,
+    handleGetUlasanUser,
+    handleDeleteUlasan,
+    loading,
+    error,
+    success,
+  };
 };

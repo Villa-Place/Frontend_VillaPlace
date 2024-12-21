@@ -14,15 +14,18 @@ const Modal: React.FC<ModalProps> = ({
   className,
 }) => {
   return (
-    <div data-testid="modal-container" className="fixed inset-0 flex items-center justify-center z-50">
+    <div
+      data-testid="modal-container"
+      className="fixed inset-0 flex items-center justify-center z-50"
+    >
       <div
         data-testid="modal-backdrop"
         className="absolute inset-0 bg-black opacity-50 backdrop-blur-md z-10"
         onClick={onClose}
       ></div>
       <div
-        className={`bg-white rounded-lg shadow-lg p-10 z-20 flex mx-2 flex-col h-fit max-h-[90%] xl:h-fit md:w-3/5 w-full ${
-          className || ""
+        className={`bg-white rounded-lg shadow-lg p-10 z-20 flex mx-2 flex-col h-fit  max-h-[90%] md:w-3/5 w-full ${
+          className && className
         }`}
       >
         <div className="flex justify-between items-center">

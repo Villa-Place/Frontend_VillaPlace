@@ -18,10 +18,7 @@ import ButtonEdit from "../ButtonEdit";
 import { TablePaymentAdminProps } from "@/types/Props/TablePaymentProps";
 
 // Utils
-import {
-  getStatusPaymentColor,
-  getStatusPaymentLabel,
-} from "@/utils/getStatusLabelAndColor";
+import { getStatusPaymentColor } from "@/utils/getStatusLabelAndColor";
 import { formatDate } from "@/utils/formatDate";
 
 const TablePayment = ({
@@ -38,7 +35,7 @@ const TablePayment = ({
   toggleModal,
   toggleModalEdit,
 }: TablePaymentAdminProps) => {
-  const { loading, success, error } = useFetchPayment();
+  const { loading, error } = useFetchPayment();
 
   return (
     <>

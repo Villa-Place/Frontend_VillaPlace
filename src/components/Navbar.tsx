@@ -188,8 +188,7 @@ const Navbar = ({ token }: NavbarProps) => {
                     </div>
                   ) : tokenUser.length > 0 ? (
                     <DropdownUser />
-                  ) 
-                  : tokenAdmin.length > 0 || tokenOwner.length > 0 ? (
+                  ) : tokenAdmin.length > 0 || tokenOwner.length > 0 ? (
                     <Link
                       href={`/dashboard/${
                         tokenAdmin.length > 0 ? "admin" : "mitra"

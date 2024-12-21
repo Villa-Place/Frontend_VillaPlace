@@ -17,7 +17,7 @@ const SidebarProfileDashboard: React.FC<SidebarProfileProps> = ({
   role,
 }) => {
   return (
-    <aside className="xl:w-1/3 flex flex-col gap-4 w-full mr-4 mb-4">
+    <aside className="xl:w-1/3 flex flex-col gap-4 w-full mr-4 mb-4 h-full ">
       <div className="w-full h-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
         <div className="flex flex-col items-center py-10">
           <Image

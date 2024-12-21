@@ -71,18 +71,28 @@ const TableManagement: React.FC<TableProps> = ({ table }) => {
           deletePromise
             .then(() => {
               if (type === "user") {
-                setUserList((prevList) => prevList.filter((user) => user._id !== userId));
+                setUserList((prevList) =>
+                  prevList.filter((user) => user._id !== userId)
+                );
               } else if (type === "mitra") {
-                setMitraList((prevList) => prevList.filter((mitra) => mitra._id !== userId));
+                setMitraList((prevList) =>
+                  prevList.filter((mitra) => mitra._id !== userId)
+                );
               } else if (type === "admin") {
-                setAdminList((prevList) => prevList.filter((admin) => admin._id !== userId));
+                setAdminList((prevList) =>
+                  prevList.filter((admin) => admin._id !== userId)
+                );
               }
 
               Swal.fire("Deleted!", `${userName} has been deleted.`, "success");
             })
             .catch((error) => {
-              Swal.fire("Error", `Failed to delete ${userName}: ${error.message}`, "error");
-            })
+              Swal.fire(
+                "Error",
+                `Failed to delete ${userName}: ${error.message}`,
+                "error"
+              );
+            });
         }
       }
     });
@@ -90,7 +100,7 @@ const TableManagement: React.FC<TableProps> = ({ table }) => {
 
   const renderTable = () => {
     let data: User[] | Mitra[] | Admin[] = [];
-    
+
     if (table === "user") {
       data = userList;
     } else if (table === "mitra") {
@@ -105,9 +115,15 @@ const TableManagement: React.FC<TableProps> = ({ table }) => {
 
     const filterData = (data: User[] | Mitra[] | Admin[]) => {
       return data.filter((item) => {
-        const matchesName = item.nama?.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesEmail = item.email?.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesNoTelepon = item.no_telepon?.toLowerCase().includes(searchTerm.toLowerCase()) || table !== "admin";
+        const matchesName = item.nama
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase());
+        const matchesEmail = item.email
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase());
+        const matchesNoTelepon =
+          item.no_telepon?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          table !== "admin";
 
         return matchesName || matchesEmail || matchesNoTelepon;
       });
@@ -127,20 +143,29 @@ const TableManagement: React.FC<TableProps> = ({ table }) => {
               <th className="p-3 text-center">No</th>
               <th className="p-3 text-left">Nama</th>
               <th className="p-3 text-left">Email</th>
-              <th className={`p-3 text-left ${table === "admin" ? "hidden" : ""}`}>No Telepon</th>
+              <th
+                className={`p-3 text-left ${table === "admin" ? "hidden" : ""}`}
+              >
+                No Telepon
+              </th>
               <th className="p-3 text-center">Action</th>
             </tr>
           </thead>
           <tbody>
             {currentData.length > 0 ? (
               currentData.map((user, idx) => (
-                <tr key={idx} className="border border-gray-300 hover:bg-gray-50">
+                <tr
+                  key={idx}
+                  className="border border-gray-300 hover:bg-gray-50"
+                >
                   <td className="p-3 text-center">
                     {indexOfFirstItem + idx + 1}
                   </td>
                   <td className="p-3">{user.nama}</td>
                   <td className="p-3">{user.email}</td>
-                  <td className={`p-3 ${table === "admin" ? "hidden" : ""}`}>{user.no_telepon ? user.no_telepon : "-"}</td>
+                  <td className={`p-3 ${table === "admin" ? "hidden" : ""}`}>
+                    {user.no_telepon ? user.no_telepon : "-"}
+                  </td>
                   <td className="p-3 text-center">
                     <ButtonDelete
                       onClick={() => handleDelete(user._id, table, user.nama)}
@@ -174,8 +199,10 @@ const TableManagement: React.FC<TableProps> = ({ table }) => {
               <div className="flex space-x-1">
                 {(() => {
                   const pages: JSX.Element[] = [];
-                  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-                  
+                  const totalPages = Math.ceil(
+                    filteredData.length / itemsPerPage
+                  );
+
                   // Fungsi untuk menambahkan nomor halaman
                   const pushPage = (pageNum: number) => {
                     pages.push(
@@ -209,7 +236,8 @@ const TableManagement: React.FC<TableProps> = ({ table }) => {
                   // Selalu tampilkan halaman pertama
                   pushPage(1);
 
-                  if (totalPages <= 5) { // Ubah dari 7 ke 5 untuk mobile
+                  if (totalPages <= 5) {
+                    // Ubah dari 7 ke 5 untuk mobile
                     // Jika total halaman 5 atau kurang, tampilkan semua
                     for (let i = 2; i < totalPages; i++) {
                       pushPage(i);
@@ -217,25 +245,25 @@ const TableManagement: React.FC<TableProps> = ({ table }) => {
                   } else {
                     // Logika untuk halaman dengan ellipsis
                     if (currentPage > 3) {
-                      pushEllipsis('start');
+                      pushEllipsis("start");
                     }
                     // Tampilkan halaman di sekitar halaman saat ini
                     let start = Math.max(2, currentPage - 1);
                     let end = Math.min(totalPages - 1, currentPage + 1);
-                    
+
                     if (currentPage <= 3) {
                       end = 4;
                     }
                     if (currentPage >= totalPages - 2) {
                       start = totalPages - 3;
                     }
-                    
+
                     for (let i = start; i <= end; i++) {
                       pushPage(i);
                     }
-                    
+
                     if (currentPage < totalPages - 2) {
-                      pushEllipsis('end');
+                      pushEllipsis("end");
                     }
                   }
 
@@ -251,9 +279,16 @@ const TableManagement: React.FC<TableProps> = ({ table }) => {
               {/* Next Button */}
               <button
                 onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredData.length / itemsPerPage)))
+                  setCurrentPage((prev) =>
+                    Math.min(
+                      prev + 1,
+                      Math.ceil(filteredData.length / itemsPerPage)
+                    )
+                  )
                 }
-                disabled={currentPage === Math.ceil(filteredData.length / itemsPerPage)}
+                disabled={
+                  currentPage === Math.ceil(filteredData.length / itemsPerPage)
+                }
                 className="p-1.5 sm:p-2 text-sm sm:text-md bg-brown-500 text-white rounded disabled:bg-gray-300"
               >
                 Next

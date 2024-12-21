@@ -8,7 +8,7 @@ import {
 
 export const useFetchVilla = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null | unknown>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
   const handleGetVillas = async (query: string) => {
@@ -20,7 +20,7 @@ export const useFetchVilla = () => {
       const result = await getVillas(query);
       setSuccess(true);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -37,7 +37,7 @@ export const useFetchVilla = () => {
       const result = await getVillaById(id);
       setSuccess(true);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -54,7 +54,7 @@ export const useFetchVilla = () => {
       const result = await getVillaByOwner(query);
       setSuccess(true);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -71,7 +71,7 @@ export const useFetchVilla = () => {
       const result = await getVillaBookedDates(id);
       setSuccess(true);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {

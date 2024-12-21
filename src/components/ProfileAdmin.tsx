@@ -84,7 +84,10 @@ const ProfileAdmin = () => {
                 dan harus berformat{" "}
                 <b className="text-gray-600">JPG, PNG, atau JPEG</b>.
               </p>
-              <span id="filename" className="text-gray-500 bg-gray-200 z-50" />
+              <span
+                id="filename"
+                className="text-gray-500 bg-gray-200 z-50"
+              ></span>
             </label>
           </div>
         </div>

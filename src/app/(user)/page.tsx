@@ -19,7 +19,6 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await handleGetVillas("limit=6");
-      console.log(res);
 
       if (res.data) {
         setVilla(res.data);

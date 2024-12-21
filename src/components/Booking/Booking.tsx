@@ -12,7 +12,7 @@ import Empty from "../Empty";
 import SkeletonLoader from "./SkeletonLoader";
 
 // Hooks
-import useFetchData from "@/hooks/useFetchData";
+// import useFetchData from "@/hooks/useFetchData";
 import { useFetchUlasan } from "@/hooks/useFetchUlasan";
 
 // Utils
@@ -20,12 +20,31 @@ import { formatDate } from "@/utils/formatDate";
 import { getStatusColor, getStatusLabel } from "@/utils/getStatusLabelAndColor";
 import { calculateDays } from "@/utils/calculateDays";
 import Link from "next/link";
+// import { Ulasan } from "@/types/Ulasan";
+import useFetchBooking from "@/hooks/useFetchBooking";
 
-type Review = {
-  rating: number;
-  komentar: string;
-  villa: string;
+type Booking = {
+  _id: string;
+  villa: {
+    _id: string;
+    nama: string;
+    lokasi: string;
+    harga: number;
+    foto_villa: [{ url: string }];
+  };
+  tanggal_mulai: string;
+  tanggal_selesai: string;
+  harga: number;
+  status: string;
+  createdAt: string;
 };
+
+interface Ulasan {
+  komentar: string;
+  rating: number;
+  villa: string;
+  pesanan: string;
+}
 
 const Booking = () => {
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -35,25 +54,49 @@ const Booking = () => {
   const [isModalReviewOpen, setIsModalReviewOpen] = useState(false);
   const [BookingData, setBookingData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [reviewData, setReviewData] = useState<Review[]>([]);
+  const [reviewData, setReviewData] = useState<Ulasan[]>([]);
 
-  console.log("Review Data", reviewData);
+  const { handleGetBookingByUser, loading } = useFetchBooking();
 
-  const { handleFetchUlasan } = useFetchUlasan();
+  const { handleFetchUlasan, handleGetUlasanUser } = useFetchUlasan();
 
-  const { data, loading } = useFetchData(
-    "http://localhost:8000/api/pesanan/user",
-    {
-      withCredentials: true,
-    }
-  );
+  // const { data, loading } = useFetchData(
+  //   "http://localhost:8000/api/pesanan/user",
+  //   {
+  //     withCredentials: true,
+  //   }
+  // );
 
-  const { data: dataReview } = useFetchData(
-    "http://localhost:8000/api/ulasan/user",
-    {
-      withCredentials: true,
-    }
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await handleGetBookingByUser();
+      if (data && data.data) {
+        setBookingData(data.data);
+      } else {
+        setBookingData([]);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await handleGetUlasanUser();
+      if (data && data.data) {
+        setReviewData(data.data);
+      } else {
+        setReviewData([]);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // const { data: dataReview } = useFetchData(
+  //   "http://localhost:8000/api/ulasan/user",
+  //   {
+  //     withCredentials: true,
+  //   }
+  // );
 
   const handleSubmit = (values: { rating: number; komentar: string }) => {
     const data = {
@@ -64,20 +107,20 @@ const Booking = () => {
     };
     handleFetchUlasan(data);
     setReviewData([...reviewData, data]);
-    toggleModalReview(null, "");
+    toggleModalReview("", "");
   };
 
-  useEffect(() => {
-    if (data) {
-      setBookingData(data.data);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setBookingData(data.data);
+  //   }
+  // }, [data]);
 
-  useEffect(() => {
-    if (dataReview) {
-      setReviewData(dataReview.data);
-    }
-  }, [dataReview]);
+  // useEffect(() => {
+  //   if (dataReview) {
+  //     setReviewData(dataReview.data);
+  //   }
+  // }, [dataReview]);
 
   useEffect(() => {
     // Filter data berdasarkan status
@@ -85,18 +128,18 @@ const Booking = () => {
       setFilteredData(BookingData);
     } else {
       const filtered = BookingData.filter(
-        (item: any) => item.status === selectedStatus
+        (item: Booking) => item.status === selectedStatus
       );
       setFilteredData(filtered);
     }
   }, [selectedStatus, BookingData]);
 
-  const toggleModal = (id: any) => {
+  const toggleModal = (id: string) => {
     setCurrentModalPesananId(id);
     setIsModalOpen(!isModalOpen);
   };
 
-  const toggleModalReview = (id: any, pesananId: any) => {
+  const toggleModalReview = (id: string, pesananId: string) => {
     setCurrentModalReviewId(id);
     setCurrentModalPesananId(pesananId);
 
@@ -165,7 +208,7 @@ const Booking = () => {
         {loading ? (
           <SkeletonLoader />
         ) : filteredData.length > 0 ? (
-          filteredData.map((item: any, index) => (
+          filteredData.map((item: Booking, index) => (
             <div key={index} className="box-3 mb-4">
               <div className="flex justify-between mb-4 items-center">
                 <div className="inline-flex items-center text-sm font-semibold">
@@ -243,7 +286,7 @@ const Booking = () => {
                     <button
                       type="button"
                       onClick={() => toggleModal(item._id)}
-                      className="flex justify-end font-semibold text-[#089562] bg-[#089562] bg-opacity-10 border border-[#089562] hover:bg-opacity-30 rounded text-sm px-3 py-1.5 me-2 dark:bg-green-600 dark:hover:bg-green-700"
+                      className="flex justify-end font-semibold text-[#089562] bg-[#089562] bg-opacity-10 border border-[#089562] hover:bg-opacity-30 rounded text-sm px-2 py-1.5 me-2 dark:bg-green-600 dark:hover:bg-green-700"
                     >
                       Lihat Detail
                     </button>
@@ -253,16 +296,15 @@ const Booking = () => {
                         onClick={() =>
                           toggleModalReview(item.villa._id, item._id)
                         }
-                        // className="flex justify-end font-semibold text-white bg-[#089562] hover:bg-green-800 rounded text-sm px-3 py-1.5 dark:bg-green-600 dark:hover:bg-green-700"
-                        className={`flex justify-end font-semibold text-white bg-[#089562] hover:bg-green-800 rounded text-sm px-3 py-1.5 dark:bg-green-600 dark:hover:bg-green-700 ${
+                        className={`flex justify-end font-semibold text-white bg-[#089562] hover:bg-green-800 rounded text-sm px-2 py-1.5 dark:bg-green-600 dark:hover:bg-green-700 ${
                           reviewData.some(
-                            (review: any) => review.pesanan === item._id
+                            (review: Ulasan) => review.pesanan === item._id
                           )
                             ? "opacity-50 cursor-not-allowed"
                             : ""
                         }`}
                         disabled={reviewData.some(
-                          (review: any) => review.pesanan === item._id
+                          (review: Ulasan) => review.pesanan === item._id
                         )}
                       >
                         Review Villa
@@ -279,7 +321,7 @@ const Booking = () => {
       </div>
       {isModalOpen && (
         <Modal
-          onClose={() => toggleModal(null)}
+          onClose={() => toggleModal("")}
           title="Detail Pesanan Villa"
           className="max-h-screen overflow-y-auto h-3/4"
         >
@@ -288,7 +330,7 @@ const Booking = () => {
       )}
       {isModalReviewOpen && (
         <Modal
-          onClose={() => toggleModalReview(null, "")}
+          onClose={() => toggleModalReview("", "")}
           title="Beri Ulasan Villa"
           className="max-w-md"
         >

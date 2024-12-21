@@ -7,10 +7,11 @@ import {
 } from "../services/mitraService";
 import { Mitra } from "../types/Mitra";
 import Swal from "sweetalert2";
+import { AxiosError } from "axios";
 
 export const useFetchMitra = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null | unknown>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
   const handleDashboardData = async (query: string) => {
@@ -21,7 +22,7 @@ export const useFetchMitra = () => {
     try {
       const result = await getDashboardData(query);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -44,7 +45,7 @@ export const useFetchMitra = () => {
       });
       setSuccess(true);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -62,10 +63,13 @@ export const useFetchMitra = () => {
     try {
       await changePassword(data);
       setSuccess(true);
-    } catch (err: any) {
-      if (err.errors) {
-        setError(err.errors);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        setError(err.message);
       }
+      // if (err.errors) {
+      //   setError(err.errors);
+      // }
       // setError(err.errors.currentPassword || "Failed to change password");
       // Swal.fire({
       //   title: "Error",
@@ -96,15 +100,16 @@ export const useFetchMitra = () => {
 
       setSuccess(true);
       return response;
-    } catch (err: any) {
-      Swal.fire({
-        title: "Error",
-        text: err.message || "Gagal menghapus mitra.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-
-      setError(err);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        setError(err.message);
+        Swal.fire({
+          title: "Error",
+          text: err.message || "Gagal menghapus mitra.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
       throw err;
     } finally {
       setLoading(false);

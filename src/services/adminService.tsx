@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Admin } from "../types/Admin";
 
 const API_BASE_URL = "http://localhost:8000/api";
@@ -12,8 +12,11 @@ export const getDashboardData = async (query: string) => {
       }
     );
     return response.data;
-  } catch (error: any) {
-    throw error.response ? error.response.data : error;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError && error.response) {
+      throw error.response.data;
+    }
+    throw error instanceof Error ? error.message : "An unknown error occurred";
   }
 };
 
@@ -27,8 +30,11 @@ export const createAdmin = async (
       { withCredentials: true }
     );
     return response.data;
-  } catch (error: any) {
-    throw error.response?.data || error.message || "An unknown error occurred";
+  } catch (error: unknown) {
+    if (error instanceof AxiosError && error.response) {
+      throw error.response.data;
+    }
+    throw error instanceof Error ? error.message : "An unknown error occurred";
   }
 };
 
@@ -41,8 +47,11 @@ export const updateAdmin = async (
       withCredentials: true,
     });
     return response.data;
-  } catch (error: any) {
-    throw error.response ? error.response.data : error;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError && error.response) {
+      throw error.response.data;
+    }
+    throw error instanceof Error ? error.message : "An unknown error occurred";
   }
 };
 
@@ -59,8 +68,11 @@ export const changePassword = async (data: {
       }
     );
     return response.data;
-  } catch (error: any) {
-    throw error.response ? error.response.data : error;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError && error.response) {
+      throw error.response.data;
+    }
+    throw error instanceof Error ? error.message : "An unknown error occurred";
   }
 };
 export const deleteAdmin = async (
@@ -71,7 +83,10 @@ export const deleteAdmin = async (
       withCredentials: true,
     });
     return response.data;
-  } catch (error: any) {
-    throw error.response?.data || error.message || "Failed to delete user";
+  } catch (error: unknown) {
+    if (error instanceof AxiosError && error.response) {
+      throw error.response.data;
+    }
+    throw error instanceof Error ? error.message : "An unknown error occurred";
   }
 };

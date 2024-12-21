@@ -1,7 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
 
 // Components
 import DetailPembayaran from "./DetailPembayaran";
@@ -15,6 +13,7 @@ import useFetchData from "@/hooks/useFetchData";
 // Utils
 import PaymentCard from "./PaymentCard";
 import calculateCountdown from "@/utils/calculateCountdown";
+import Payment from "@/types/Payment";
 
 const PaymentUser = () => {
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -41,8 +40,9 @@ const PaymentUser = () => {
     const interval = setInterval(() => {
       const updatedCountdowns: { [key: string]: string } = {};
 
-      PaymentData.forEach((item: any) => {
+      PaymentData.forEach((item: Payment) => {
         if (item.status_pembayaran === "pending") {
+          console.log(item, "ITEM");
           updatedCountdowns[item._id] = calculateCountdown(item.expiry_time);
         }
       });
@@ -59,13 +59,13 @@ const PaymentUser = () => {
       setFilteredData(PaymentData);
     } else {
       const filtered = PaymentData.filter(
-        (item: any) => item.status_pembayaran === selectedStatus
+        (item: Payment) => item.status_pembayaran === selectedStatus
       );
       setFilteredData(filtered);
     }
   }, [selectedStatus, PaymentData]);
 
-  const toggleModal = (id: any) => {
+  const toggleModal = (id: string) => {
     setCurrentModalId(id);
     setIsModalOpen(!isModalOpen);
   };
@@ -123,7 +123,7 @@ const PaymentUser = () => {
         {loading ? (
           <SkeletonLoader />
         ) : filteredData.length > 0 ? (
-          filteredData.map((item: any, index) => (
+          filteredData.map((item: Payment, index) => (
             <PaymentCard
               key={index}
               item={item}
@@ -137,7 +137,7 @@ const PaymentUser = () => {
       </div>
       {isModalOpen && (
         <Modal
-          onClose={() => toggleModal(null)}
+          onClose={() => toggleModal("")}
           title="Detail Pembayaran"
           className="max-h-screen overflow-y-auto h-3/4"
         >

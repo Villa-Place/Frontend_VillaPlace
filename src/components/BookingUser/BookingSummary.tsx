@@ -1,9 +1,10 @@
 import React from "react";
 import Image from "next/image";
+import { VillaProps } from "@/types/Villa";
 
 interface BookingSummaryProps {
   // handleSubmit: () => void;
-  villa: any;
+  villa: VillaProps;
   rentalDays: number;
 }
 

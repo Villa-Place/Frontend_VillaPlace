@@ -1,10 +1,15 @@
 import React from "react";
-import { useFormik } from "formik";
+import { useFormik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 
 interface EditProfileProps {
-  data: any;
-  setMenuOpen: any;
+  data: {
+    _id: string;
+    nama: string;
+    email: string;
+    no_telepon: string;
+  };
+  setMenuOpen: (menu: string) => void;
   handleSubmitMitra: (
     values: {
       _id: string;
@@ -12,7 +17,12 @@ interface EditProfileProps {
       email: string;
       no_telepon: string;
     },
-    formikHelpers: any
+    formikHelpers: FormikHelpers<{
+      _id: string;
+      nama: string;
+      email: string;
+      no_telepon: string;
+    }>
   ) => void;
 }
 

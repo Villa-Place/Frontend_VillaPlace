@@ -3,7 +3,8 @@ import { deleteFavorite } from "../services/favoriteService";
 
 export const useFetchFavorite = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
+  // const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null | unknown>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
   const handleDeleteFavorite = async (id: string) => {
@@ -16,7 +17,7 @@ export const useFetchFavorite = () => {
       setSuccess(true);
 
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {

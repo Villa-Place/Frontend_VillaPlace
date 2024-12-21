@@ -1,9 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Users, Building2, Wallet, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import TransactionAreaChart from "@/components/Chart/TransactionChart";
 import { useFetchMitra } from "@/hooks/useFetchMitra";
+
+export interface DashboardDataOwner {
+  villaCount: number;
+  pesananCount: number;
+  ulasanCount: number;
+  avgRating: number;
+}
 
 interface StatCardProps {
   icon: React.ReactNode;
@@ -23,7 +30,7 @@ const StatCard: React.FC<StatCardProps> = ({ icon, title, value, bgColor }) => (
 );
 
 const DashboardMitra = () => {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = React.useState<DashboardDataOwner | null>(null);
 
   const { handleDashboardData } = useFetchMitra();
 
@@ -68,7 +75,7 @@ const DashboardMitra = () => {
             <Users className="w-14 h-14 text-white border border-white rounded-full bg-green-400 p-2" />
           }
           title="Total Villa"
-          value={data?.villaCount}
+          value={data?.villaCount || 0}
           bgColor="bg-green-200/80"
         />
         <StatCard
@@ -76,7 +83,7 @@ const DashboardMitra = () => {
             <Building2 className="w-14 h-14 text-white border border-white rounded-full bg-orange-400 p-2" />
           }
           title="Total Pesanan"
-          value={data?.pesananCount}
+          value={data?.pesananCount || 0}
           bgColor="bg-orange-200/80"
         />
         <StatCard
@@ -84,7 +91,7 @@ const DashboardMitra = () => {
             <Wallet className="w-14 h-14 text-white border border-white rounded-full bg-purple-400 p-2" />
           }
           title="Total Ulasan"
-          value={data?.ulasanCount}
+          value={data?.ulasanCount || 0}
           bgColor="bg-purple-200/80"
         />
         <StatCard
@@ -92,7 +99,7 @@ const DashboardMitra = () => {
             <ImageIcon className="w-14 h-14 text-white border border-white rounded-full bg-blue-400 p-2" />
           }
           title="Rata-rata Rating"
-          value={data?.avgRating}
+          value={data?.avgRating || 0}
           bgColor="bg-blue-200/80"
         />
       </div>

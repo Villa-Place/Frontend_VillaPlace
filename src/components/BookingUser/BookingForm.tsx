@@ -5,11 +5,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchemaBooking from "@/validations/bookingUser";
 
+interface BookingValues {
+  fullName: string;
+  email: string;
+  guests: number;
+  checkInDate: string;
+  checkOutDate: string;
+  notes: string;
+}
+
 interface BookingFormProps {
   handleChange: (event: { target: { name: string; value: string } }) => void;
-  handleSubmit: (values: any) => void;
+  handleSubmit: (values: BookingValues) => void;
   bookingDate: { tanggal_mulai: string; tanggal_selesai: string }[];
-  villa: any;
 }
 
 const BookingForm: React.FC<BookingFormProps> = ({

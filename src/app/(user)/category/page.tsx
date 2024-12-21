@@ -40,15 +40,6 @@ const Category = () => {
   // Memoisasi data
   const villas = useMemo(() => data?.data || [], [data]);
 
-  // Mendapatkan kategori unik
-  // const availableCategories = useMemo(() => {
-  //   const categories = new Set<string>();
-  //   villas.forEach((villa: VillaProps) => {
-  //     villa.kategori.forEach((cat: string) => categories.add(cat));
-  //   });
-  //   return Array.from(categories);
-  // }, [villas]);
-
   // Filter villas berdasarkan kondisi
   const filteredVillas = useMemo(() => {
     return villas.filter((villa: VillaProps) => {
@@ -91,8 +82,6 @@ const Category = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     return filteredVillas.slice(startIndex, startIndex + itemsPerPage);
   }, [filteredVillas, currentPage]);
-
-  // const totalPages = Math.ceil(filteredVillas.length / itemsPerPage);
 
   // Handler functions
   const handlePriceRangeChange = useCallback((min: number, max: number) => {
@@ -291,8 +280,10 @@ const Category = () => {
               <div className="flex space-x-1">
                 {(() => {
                   const pages: JSX.Element[] = [];
-                  const totalPages = Math.ceil(filteredVillas.length / itemsPerPage);
-                  
+                  const totalPages = Math.ceil(
+                    filteredVillas.length / itemsPerPage
+                  );
+
                   // Fungsi untuk menambahkan nomor halaman
                   const pushPage = (pageNum: number) => {
                     pages.push(
@@ -326,7 +317,8 @@ const Category = () => {
                   // Selalu tampilkan halaman pertama
                   pushPage(1);
 
-                  if (totalPages <= 5) { // Ubah dari 7 ke 5 untuk mobile
+                  if (totalPages <= 5) {
+                    // Ubah dari 7 ke 5 untuk mobile
                     // Jika total halaman 5 atau kurang, tampilkan semua
                     for (let i = 2; i < totalPages; i++) {
                       pushPage(i);
@@ -334,25 +326,25 @@ const Category = () => {
                   } else {
                     // Logika untuk halaman dengan ellipsis
                     if (currentPage > 3) {
-                      pushEllipsis('start');
+                      pushEllipsis("start");
                     }
                     // Tampilkan halaman di sekitar halaman saat ini
                     let start = Math.max(2, currentPage - 1);
                     let end = Math.min(totalPages - 1, currentPage + 1);
-                    
+
                     if (currentPage <= 3) {
                       end = 4;
                     }
                     if (currentPage >= totalPages - 2) {
                       start = totalPages - 3;
                     }
-                    
+
                     for (let i = start; i <= end; i++) {
                       pushPage(i);
                     }
-                    
+
                     if (currentPage < totalPages - 2) {
-                      pushEllipsis('end');
+                      pushEllipsis("end");
                     }
                   }
 
@@ -368,9 +360,17 @@ const Category = () => {
               {/* Next Button */}
               <button
                 onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredVillas.length / itemsPerPage)))
+                  setCurrentPage((prev) =>
+                    Math.min(
+                      prev + 1,
+                      Math.ceil(filteredVillas.length / itemsPerPage)
+                    )
+                  )
                 }
-                disabled={currentPage === Math.ceil(filteredVillas.length / itemsPerPage)}
+                disabled={
+                  currentPage ===
+                  Math.ceil(filteredVillas.length / itemsPerPage)
+                }
                 className="p-1.5 sm:p-2 text-sm sm:text-md bg-brown-500 text-white rounded disabled:bg-gray-300"
               >
                 Next

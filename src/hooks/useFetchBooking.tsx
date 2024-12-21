@@ -6,13 +6,16 @@ import {
   updatePesanan,
   deletePesanan,
   getPesanan,
+  getPesananUser,
 } from "@/services/pesananService";
+import Booking from "@/types/Booking";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 const useFetchBooking = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
+  // const [error, setError] = useStat>(null);
+  const [error, setError] = useState<string | null | unknown>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
   const handleGetAllBooking = async (query: string) => {
@@ -22,7 +25,7 @@ const useFetchBooking = () => {
     try {
       const result = await getPesanan(query);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -37,7 +40,7 @@ const useFetchBooking = () => {
     try {
       const result = await getPesananById(id);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -52,7 +55,7 @@ const useFetchBooking = () => {
     try {
       const result = await getPesananByOwner(query);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -60,7 +63,22 @@ const useFetchBooking = () => {
     }
   };
 
-  const handleCreateBooking = async (dataBooking: any) => {
+  const handleGetBookingByUser = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await getPesananUser();
+      return result;
+    } catch (err) {
+      setError(err);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateBooking = async (dataBooking: Booking) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -70,7 +88,7 @@ const useFetchBooking = () => {
       setSuccess(true);
 
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -78,7 +96,7 @@ const useFetchBooking = () => {
     }
   };
 
-  const handleCreateBookingOwner = async (dataBooking: any) => {
+  const handleCreateBookingOwner = async (dataBooking: Booking) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -88,7 +106,7 @@ const useFetchBooking = () => {
       setSuccess(true);
 
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -96,7 +114,7 @@ const useFetchBooking = () => {
     }
   };
 
-  const handleUpdateBooking = async (id: string, dataBooking: any) => {
+  const handleUpdateBooking = async (id: string, dataBooking: Booking) => {
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -106,7 +124,7 @@ const useFetchBooking = () => {
       setSuccess(true);
 
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -124,7 +142,7 @@ const useFetchBooking = () => {
       setSuccess(true);
 
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -134,6 +152,7 @@ const useFetchBooking = () => {
 
   return {
     handleCreateBooking,
+    handleGetBookingByUser,
     handleCreateBookingOwner,
     handleGetAllBooking,
     handleGetBookingById,

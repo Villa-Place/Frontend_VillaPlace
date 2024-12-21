@@ -136,7 +136,7 @@ const PostingMitra = () => {
             <li>
               <span className="text-gray-500">/</span>
             </li>
-            <li>Manajemen Posting</li>
+            <li>Manajemen Postingan</li>
           </ol>
         </nav>
       </div>
@@ -146,7 +146,9 @@ const PostingMitra = () => {
         <div className="bg-white border-2 rounded-xl flex justify-between mb-5 p-6">
           <div>
             <h2 className="text-2xl font-bold mb-3">Manajemen Posting</h2>
-            <p className="text-lg font-normal text-gray-500">Halaman untuk memanajemen posting</p>
+            <p className="text-lg font-normal text-gray-500">
+              Halaman untuk memanajemen posting
+            </p>
           </div>
           <div>
             <Link href="/dashboard/mitra/posting/tambahVilla">
@@ -243,29 +245,29 @@ const PostingMitra = () => {
               <div className="overflow-x-auto">
                 <table className="min-w-full table-auto border-collapse border border-gray-300">
                   <thead className="bg-primary text-white dark:bg-meta-4">
-                  <tr className="bg-emerald-600 text-white dark:bg-meta-4 text-left">
-                          <th className="min-w-[20px] py-4 px-4 font-semibold text-gray-50 dark:text-white">
-                            No
-                          </th>
-                          <th className="min-w-[220px] py-4 px-10 font-semibold text-gray-50 dark:text-white">
-                            Villa
-                          </th>
-                          <th className="min-w-[120px] py-4 px-2 font-semibold text-gray-50 dark:text-white">
-                            Fasilitas
-                          </th>
-                          <th className="min-w-[120px] py-4 px-3 font-semibold text-gray-50 dark:text-white">
-                            Lokasi
-                          </th>
-                          <th className="min-w-[20px] py-4 px-3 font-semibold text-gray-50 dark:text-white">
-                            Kategori
-                          </th>
-                          <th className="min-w-[20px] py-4 px-4 font-semibold text-gray-50 dark:text-white">
-                            Status
-                          </th>
-                          <th className="min-w-[120px] py-4 px-4 font-semibold text-gray-50 dark:text-white">
-                            Action
-                          </th>
-                        </tr>
+                    <tr className="bg-emerald-600 text-white dark:bg-meta-4 text-left">
+                      <th className="min-w-[20px] py-4 px-4 font-semibold text-gray-50 dark:text-white">
+                        No
+                      </th>
+                      <th className="min-w-[220px] py-4 px-10 font-semibold text-gray-50 dark:text-white">
+                        Villa
+                      </th>
+                      <th className="min-w-[120px] py-4 px-2 font-semibold text-gray-50 dark:text-white">
+                        Fasilitas
+                      </th>
+                      <th className="min-w-[120px] py-4 px-3 font-semibold text-gray-50 dark:text-white">
+                        Lokasi
+                      </th>
+                      <th className="min-w-[20px] py-4 px-3 font-semibold text-gray-50 dark:text-white">
+                        Kategori
+                      </th>
+                      <th className="min-w-[20px] py-4 px-4 font-semibold text-gray-50 dark:text-white">
+                        Status
+                      </th>
+                      <th className="min-w-[120px] py-4 px-4 font-semibold text-gray-50 dark:text-white">
+                        Action
+                      </th>
+                    </tr>
                   </thead>
                   <tbody>
                     {currentItems.length === 0 ? (
@@ -287,7 +289,8 @@ const PostingMitra = () => {
                             <div>
                               <Image
                                 src={
-                                  data.foto_villa?.[0]?.url || "/default-image.png"
+                                  data.foto_villa?.[0]?.url ||
+                                  "/default-image.png"
                                 }
                                 alt="Gambar Villa"
                                 width={50}
@@ -333,7 +336,9 @@ const PostingMitra = () => {
                             />
                             <ButtonDelete
                               onClick={() => {
-                                return confirm("Anda yakin ingin menghapus data?")
+                                return confirm(
+                                  "Anda yakin ingin menghapus data?"
+                                )
                                   ? handleDelete(data._id)
                                   : "";
                               }}
@@ -352,7 +357,9 @@ const PostingMitra = () => {
                   <div className="flex space-x-1 sm:space-x-2">
                     {/* Previous Button */}
                     <button
-                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.max(prev - 1, 1))
+                      }
                       disabled={currentPage === 1}
                       className="p-1.5 sm:p-2 text-sm sm:text-md bg-brown-500 text-white rounded disabled:bg-gray-300"
                     >
@@ -362,8 +369,10 @@ const PostingMitra = () => {
                     <div className="flex space-x-1">
                       {(() => {
                         const pages: JSX.Element[] = [];
-                        const totalPages = Math.ceil(filteredVilla.length / itemsPerPage);
-                        
+                        const totalPages = Math.ceil(
+                          filteredVilla.length / itemsPerPage
+                        );
+
                         // Fungsi untuk menambahkan nomor halaman
                         const pushPage = (pageNum: number) => {
                           pages.push(
@@ -397,7 +406,8 @@ const PostingMitra = () => {
                         // Selalu tampilkan halaman pertama
                         pushPage(1);
 
-                        if (totalPages <= 5) { // Ubah dari 7 ke 5 untuk mobile
+                        if (totalPages <= 5) {
+                          // Ubah dari 7 ke 5 untuk mobile
                           // Jika total halaman 5 atau kurang, tampilkan semua
                           for (let i = 2; i < totalPages; i++) {
                             pushPage(i);
@@ -405,25 +415,25 @@ const PostingMitra = () => {
                         } else {
                           // Logika untuk halaman dengan ellipsis
                           if (currentPage > 3) {
-                            pushEllipsis('start');
+                            pushEllipsis("start");
                           }
                           // Tampilkan halaman di sekitar halaman saat ini
                           let start = Math.max(2, currentPage - 1);
                           let end = Math.min(totalPages - 1, currentPage + 1);
-                          
+
                           if (currentPage <= 3) {
                             end = 4;
                           }
                           if (currentPage >= totalPages - 2) {
                             start = totalPages - 3;
                           }
-                          
+
                           for (let i = start; i <= end; i++) {
                             pushPage(i);
                           }
-                          
+
                           if (currentPage < totalPages - 2) {
-                            pushEllipsis('end');
+                            pushEllipsis("end");
                           }
                         }
 
@@ -439,9 +449,17 @@ const PostingMitra = () => {
                     {/* Next Button */}
                     <button
                       onClick={() =>
-                        setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(filteredVilla.length / itemsPerPage)))
+                        setCurrentPage((prev) =>
+                          Math.min(
+                            prev + 1,
+                            Math.ceil(filteredVilla.length / itemsPerPage)
+                          )
+                        )
                       }
-                      disabled={currentPage === Math.ceil(filteredVilla.length / itemsPerPage)}
+                      disabled={
+                        currentPage ===
+                        Math.ceil(filteredVilla.length / itemsPerPage)
+                      }
                       className="p-1.5 sm:p-2 text-sm sm:text-md bg-brown-500 text-white rounded disabled:bg-gray-300"
                     >
                       Next

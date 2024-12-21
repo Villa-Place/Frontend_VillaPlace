@@ -36,7 +36,7 @@ const TableBookingAdmin = ({
   toggleModal,
   toggleModalEdit,
 }: TableBookingAdminProps) => {
-  const { loading, success, error } = useFetchBooking();
+  const { loading, error } = useFetchBooking();
 
   return (
     <>

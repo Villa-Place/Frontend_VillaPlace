@@ -8,10 +8,19 @@ import useFetchBooking from "@/hooks/useFetchBooking";
 import { calculateRentalDays } from "@/utils/calculateDays";
 import Swal from "sweetalert2";
 import generateBookingId from "@/utils/generateBookingId";
-// import { useRouter } from "next/navigation";
+import { VillaProps } from "@/types/Villa";
+
+interface BookingValues {
+  fullName: string;
+  email: string;
+  guests: number;
+  checkInDate: string;
+  checkOutDate: string;
+  notes: string;
+}
 
 interface BookingProps {
-  villa: any;
+  villa: VillaProps;
   bookedDates: { tanggal_mulai: string; tanggal_selesai: string }[];
 }
 
@@ -26,17 +35,13 @@ const Booking: React.FC<BookingProps> = ({ villa, bookedDates }) => {
   });
   const [rentalDays, setRentalDays] = useState(0);
 
-  // const router = useRouter();
-
   const { handleCreatePayment } = useFetchPayment();
   const { handleCreateBooking } = useFetchBooking();
-
-  console.log("formData", formData);
 
   const [tokenMidtrans, setTokenMidtrans] = useState(null);
   const [modal, setModal] = useState(false);
 
-  const handleChange = (e: { target: { name: string; value: any } }) => {
+  const handleChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -50,7 +55,7 @@ const Booking: React.FC<BookingProps> = ({ villa, bookedDates }) => {
     }
   };
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: BookingValues) => {
     // Swal.fire({
     //    title: "Pesan Villa",
     //    text: "Apakah anda yakin ingin memesan villa ini?",
@@ -117,6 +122,7 @@ const Booking: React.FC<BookingProps> = ({ villa, bookedDates }) => {
     const midtransUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
 
     const scriptTag = document.createElement("script");
+    const scriptTag = document.createElement("script");
     scriptTag.src = midtransUrl;
 
     const midtransClientKey = "SB-Mid-client-biw0_z5pnI4tFfTA";
@@ -133,6 +139,7 @@ const Booking: React.FC<BookingProps> = ({ villa, bookedDates }) => {
     if (!tokenMidtrans) return;
     try {
       window.snap.pay(tokenMidtrans, {
+        onSuccess: async (result) => {
         onSuccess: async (result) => {
           const dataBooking = {
             jumlah_orang: formData.guests,
@@ -170,6 +177,7 @@ const Booking: React.FC<BookingProps> = ({ villa, bookedDates }) => {
 
           window.location.href = "/user/bookings";
         },
+        onPending: async (result) => {
         onPending: async (result) => {
           const midtransData = await axios.get(
             `http://localhost:8000/api/pembayaran/status/${result.order_id}`,
@@ -227,6 +235,7 @@ const Booking: React.FC<BookingProps> = ({ villa, bookedDates }) => {
           window.location.href = `/user/payment-history`;
         },
         onError: (error) => {
+        onError: (error) => {
           Swal.fire({
             icon: "error",
             title: "Gagal",
@@ -255,7 +264,6 @@ const Booking: React.FC<BookingProps> = ({ villa, bookedDates }) => {
               handleChange={handleChange}
               handleSubmit={handleSubmit}
               bookingDate={bookedDates}
-              villa={villa}
             />
             <BookingSummary
               villa={villa}

@@ -49,12 +49,13 @@ const ProfilePictureUploader: React.FC<ProfilePictureUploaderProps> = ({
 
   const handleUpload = async () => {
     if (!imagePreview) {
-      Swal.fire({
+      await Swal.fire({
         title: "File belum dipilih",
         text: "Silakan pilih file terlebih dahulu.",
         icon: "warning",
         confirmButtonText: "OK",
       });
+      return;
     }
 
     try {

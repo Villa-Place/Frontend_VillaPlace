@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { updateUser, changePassword, deleteUser } from "../services/userService";
+import {
+  updateUser,
+  changePassword,
+  deleteUser,
+} from "../services/userService";
 import { User } from "../types/User";
 import Swal from "sweetalert2";
+import { AxiosError } from "axios";
 
 export const useFetchUser = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null | unknown>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
   const handleUpdateUser = async (id: string, data: Omit<User, "_id">) => {
@@ -23,7 +28,7 @@ export const useFetchUser = () => {
       });
       setSuccess(true);
       return result;
-    } catch (err: any) {
+    } catch (err) {
       setError(err);
       throw err;
     } finally {
@@ -47,14 +52,21 @@ export const useFetchUser = () => {
         confirmButtonText: "OK",
       });
       setSuccess(true);
-    } catch (err: any) {
-      setError(err.errors.currentPassword || "Failed to change password");
-      Swal.fire({
-        title: "Error",
-        text: err.errors.currentPassword || "Failed to change password",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+    } catch (err) {
+      // if (err instanceof AxiosError) {
+      //   setError(err.message || "Failed to change password");
+      //   Swal.fire({
+      //     title: "Error",
+      //     text: err.message || "Failed to change password",
+      //     icon: "error",
+      //     confirmButtonText: "OK",
+      //   });
+      // }
+      console.log(err, "ERRRORRR");
+      // if (err.errors.currentPassword && err.errors) {
+      //   setError(err.errors.currentPassword);
+      // }
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -77,13 +89,15 @@ export const useFetchUser = () => {
 
       setSuccess(true);
       return response;
-    } catch (err: any) {
-      Swal.fire({
-        title: "Error",
-        text: err.message || "Gagal menghapus user.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        Swal.fire({
+          title: "Error",
+          text: err.message || "Gagal menghapus user.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
 
       setError(err);
       throw err;
@@ -92,5 +106,12 @@ export const useFetchUser = () => {
     }
   };
 
-  return { handleUpdateUser, handleChangePassword, handleDeleteUser, loading, error, success };
+  return {
+    handleUpdateUser,
+    handleChangePassword,
+    handleDeleteUser,
+    loading,
+    error,
+    success,
+  };
 };

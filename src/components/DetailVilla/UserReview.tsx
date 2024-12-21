@@ -1,11 +1,24 @@
 import React from "react";
 import Image from "next/image";
 import RatingStar from "./RatingStar";
+
+interface Ulasan {
+  id: number;
+  rating: number;
+  komentar: string;
+  createdAt: string;
+  user: {
+    id: number;
+    nama: string;
+    foto_profile: string;
+  };
+}
+
 interface UserReviewProps {
-  ulasan: any;
+  ulasan: Ulasan[];
   commentCount: number;
   averageRating: number;
-  setIsModalReviewOpen: any;
+  setIsModalReviewOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UserReview = ({
@@ -22,7 +35,7 @@ const UserReview = ({
           <RatingStar rating={averageRating} />
         </span>
       </h3>
-      {ulasan.slice(0, 3).map((data: any, index: any) => (
+      {ulasan.slice(0, 3).map((data: Ulasan, index: number) => (
         <div className="mt-4 flex gap-4 items-start" key={index}>
           <Image
             src={`http://localhost:8000/images/user-profile/${data.user.foto_profile}`}

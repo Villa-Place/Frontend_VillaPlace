@@ -2,7 +2,6 @@
 // React
 import React from "react";
 import Image from "next/image";
-import Swal from "sweetalert2";
 
 // Hooks
 import useFetchPayment from "@/hooks/useFetchPayment";
@@ -18,10 +17,7 @@ import { TablePaymentProps } from "@/types/Props/TablePaymentProps";
 
 // Utils
 import { formatDate } from "@/utils/formatDate";
-import {
-  getStatusPaymentColor,
-  getStatusPaymentLabel,
-} from "@/utils/getStatusLabelAndColor";
+import { getStatusPaymentColor } from "@/utils/getStatusLabelAndColor";
 
 const TablePayment = ({
   search,
@@ -35,7 +31,7 @@ const TablePayment = ({
   handleSelectStatus,
   toggleModal,
 }: TablePaymentProps) => {
-  const { loading, success, error } = useFetchPayment();
+  const { loading, error } = useFetchPayment();
 
   return (
     <>

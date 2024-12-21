@@ -46,10 +46,17 @@ const LoginForm = () => {
         router.push("/dashboard/admin");
       }
     } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Login",
+          text: error?.response?.data.message,
+        });
+      }
       Swal.fire({
         icon: "error",
         title: "Gagal Login",
-        text: error instanceof Error ? error.message : "Terjadi kesalahan",
+        text: "Terjadi kesalahan saat login",
       });
     }
   };

@@ -15,7 +15,6 @@ interface FormValues {
 const LoginForm = () => {
   const [isUser, setIsUser] = useState(true);
   const router = useRouter();
-  const [serverError] = useState("");
 
   // Validasi Yup
   const validationSchema = Yup.object().shape({
@@ -27,6 +26,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (
     values: { email: string; password: string },
+    { setFieldError }: FormikHelpers<FormValues>
     { setFieldError }: FormikHelpers<FormValues>
   ) => {
     try {
@@ -47,11 +47,12 @@ const LoginForm = () => {
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        if (error.response && error.response.data && error.response.data.errors) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
           const errors = error.response.data.errors;
-          console.log(errors.email);
-
-          // Set error pada field yang relevan
 
           if (errors.email) {
             setFieldError("email", "Email tidak ditemukan");
@@ -61,8 +62,10 @@ const LoginForm = () => {
             setFieldError("password", "Password salah");
           }
         } else {
-          setFieldError("email", "Terjadi kesalahan, silakan coba lagi nanti"); // Default error jika field spesifik tidak ditemukan
+          setFieldError("email", "Terjadi kesalahan, silakan coba lagi nanti");
         }
+      } else {
+        console.error("Unknown error:", error);
       }
     }
   };
@@ -73,7 +76,9 @@ const LoginForm = () => {
       <div className="flex justify-center gap-7 mb-16">
         <button
           className={`text-4xl font-semibold px-4 py-2 ${
-            isUser ? "text-black border-b-2 font-bold border-green-500" : "text-gray-500"
+            isUser
+              ? "text-black border-b-2 font-bold border-green-500"
+              : "text-gray-500"
           }`}
           onClick={() => setIsUser(true)}
         >
@@ -90,9 +95,6 @@ const LoginForm = () => {
           Mitra
         </button>
       </div>
-
-      {/* Error Message */}
-      {serverError && <p className="text-red-500">{serverError}</p>}
 
       {/* Form */}
       <Formik

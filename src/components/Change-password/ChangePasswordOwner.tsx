@@ -1,19 +1,28 @@
 "use client";
 import React from "react";
-import { useFormik } from "formik";
+import { FormikHelpers, useFormik } from "formik";
 
 import * as Yup from "yup";
 import { useFetchMitra } from "@/hooks/useFetchMitra";
 import Swal from "sweetalert2";
 
 interface ChangePasswordProps {
-  setMenuOpen: any;
+  setMenuOpen: (menu: string) => void;
+}
+
+interface ChangePasswordState {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 const ChangePassword = ({ setMenuOpen }: ChangePasswordProps) => {
   const { handleChangePassword, loading } = useFetchMitra();
 
-  const handleUpdatePassword = async (values: any, formikHelpers: any) => {
+  const handleUpdatePassword = async (
+    values: ChangePasswordState,
+    formikHelpers: FormikHelpers<ChangePasswordState>
+  ) => {
     try {
       await handleChangePassword({
         currentPassword: values.currentPassword,
@@ -27,11 +36,14 @@ const ChangePassword = ({ setMenuOpen }: ChangePasswordProps) => {
         icon: "success",
         confirmButtonText: "OK",
       });
-    } catch (err: any) {
-      formikHelpers.setFieldError(
-        "currentPassword",
-        err.errors.currentPassword
-      );
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        formikHelpers.setFieldError("currentPassword", err.message);
+      }
+      // formikHelpers.setFieldError(
+      //   "currentPassword",
+      //   err.errors.currentPassword
+      // );
     }
   };
 

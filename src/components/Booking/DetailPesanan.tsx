@@ -64,7 +64,7 @@ const DetailPesanan: React.FC<DetailPesananProps> = ({ pesananId }) => {
               <span className="mr-3">:</span>
               <div className="flex flew-wrap gap-2">
                 {data?.data?.villa.fasilitas?.map(
-                  (fasilitas: any, index: number) => (
+                  (fasilitas: string, index: number) => (
                     <p key={index} className="font-semibold">
                       {fasilitas}
                       {", "}

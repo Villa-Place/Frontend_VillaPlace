@@ -2,11 +2,22 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-interface FavoriteCardProps {
-  favorite: any;
+interface Favorite {
+  _id: string;
+  villa: {
+    _id: string;
+    nama: string;
+    lokasi: string;
+    fasilitas: string[];
+    foto_villa: { url: string }[];
+  };
+}
 
-  activeDropdown: number | null;
-  toggleDropdown: (id: number) => void;
+interface FavoriteCardProps {
+  favorite: Favorite;
+
+  activeDropdown: string | null;
+  toggleDropdown: (id: string) => void;
   handleDelete: (id: string) => void;
 }
 
@@ -63,7 +74,7 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({
                     <p>Fasilitas</p>
                     <div>
                       {favorite.villa.fasilitas.map(
-                        (fasilitas: any, index: number) => (
+                        (fasilitas: string, index: number) => (
                           <span
                             key={index}
                             className={`inline-block capitalize py-1 px-3 text-xs font-semibold rounded-full bg-[#B7906C]/10 text-[#B7906C]`}

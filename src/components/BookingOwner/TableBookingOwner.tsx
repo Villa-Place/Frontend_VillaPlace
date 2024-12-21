@@ -18,7 +18,7 @@ import { TableBookingOwnerProps } from "@/types/Props/TableBookingProps";
 import { formatDate } from "@/utils/formatDate";
 import ButtonDetail from "./ButtonDetail";
 import Booking from "@/types/Booking";
-import { getStatusColor, getStatusLabel } from "@/utils/getStatusLabelAndColor";
+import { getStatusColor } from "@/utils/getStatusLabelAndColor";
 
 const TableBookingOwner = ({
   search,
@@ -32,7 +32,7 @@ const TableBookingOwner = ({
   handleSelectStatus,
   toggleModal,
 }: TableBookingOwnerProps) => {
-  const { loading, success, error } = useFetchBooking();
+  const { loading, error } = useFetchBooking();
 
   return (
     <>

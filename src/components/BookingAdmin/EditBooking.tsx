@@ -11,7 +11,7 @@ interface Props {
 const EditBooking = ({ bookingId, onEdit }: Props) => {
   const [dataBooking, setDataBooking] = useState<Booking | null>(null);
 
-  const { handleGetBookingById, loading, success, error } = useFetchBooking();
+  const { handleGetBookingById, loading, error } = useFetchBooking();
 
   useEffect(() => {
     // Simulasi fetch data payment berdasarkan paymentId
@@ -154,7 +154,7 @@ const EditBooking = ({ bookingId, onEdit }: Props) => {
             htmlFor="status"
             className="mb-[10px] block text-base font-medium text-dark dark:text-white"
           >
-            Status Pembayaran:
+            Status Pesanan:
           </label>
           <select
             id="status"

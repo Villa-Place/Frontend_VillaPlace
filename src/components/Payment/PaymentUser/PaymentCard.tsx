@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,9 +10,27 @@ import {
   getStatusPaymentLabel,
 } from "@/utils/getStatusLabelAndColor";
 
+interface PaymentData {
+  _id: string;
+  kode_pembayaran: string;
+  tanggal_pembayaran: string;
+  jumlah_pembayaran: number;
+  status_pembayaran: string;
+  metode_pembayaran: string;
+  bank: string;
+  pdf_url: string;
+  pesanan: {
+    villa: {
+      _id: string;
+      nama: string;
+      lokasi: string;
+      foto_villa: { url: string }[];
+    };
+  };
+}
 interface PaymentCardProps {
-  item: any;
-  toggleModal: (id: any) => void;
+  item: PaymentData;
+  toggleModal: (id: string) => void;
   countdown: string;
 }
 

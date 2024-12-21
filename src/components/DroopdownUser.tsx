@@ -78,7 +78,7 @@ const DropdownUser: React.FC = () => {
               {/* <span className="block text-xs">{user.data.email}</span> */}
             </div>
 
-            <span className="h-12 w-12 rounded-full border">
+            <div className="h-12 w-12 rounded-full border">
               <Image
                 width={112}
                 height={112}
@@ -86,7 +86,7 @@ const DropdownUser: React.FC = () => {
                 className="rounded-full object-cover w-full h-full"
                 alt="User"
               />
-            </span>
+            </div>
 
             <svg
               className="hidden fill-current sm:block"

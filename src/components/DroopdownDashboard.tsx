@@ -34,8 +34,8 @@ const DropdownDashboard: React.FC<DropdownDashboardProps> = ({ role }) => {
   const [mitraData, setMitraData] = useState<Mitra>();
   const [adminData, setAdminData] = useState<Admin>();
 
-  const { handleUpdateMitra: updateMitra, error: errorMitra } = useFetchMitra();
-  const { handleUpdateAdmin: updateAdmin, error: errorAdmin } = useFetchAdmin();
+  const { handleUpdateMitra: updateMitra } = useFetchMitra();
+  const { handleUpdateAdmin: updateAdmin } = useFetchAdmin();
 
   const { data } = useFetchData(
     `http://localhost:8000/api/${
@@ -175,7 +175,7 @@ const DropdownDashboard: React.FC<DropdownDashboardProps> = ({ role }) => {
               {/* <span className="block text-xs">{user.data.email}</span> */}
             </div>
 
-            <span className="h-12 w-12 rounded-full border">
+            <div className="h-12 w-12 rounded-full border">
               <Image
                 width={112}
                 height={112}
@@ -183,7 +183,7 @@ const DropdownDashboard: React.FC<DropdownDashboardProps> = ({ role }) => {
                 className="rounded-full object-cover w-full h-full"
                 alt="User"
               />
-            </span>
+            </div>
 
             <svg
               className="hidden fill-current sm:block"
@@ -269,7 +269,7 @@ const DropdownDashboard: React.FC<DropdownDashboardProps> = ({ role }) => {
       {/* <!-- Modal Start --> */}
       {modalOpen && (
         <Modal title="Pengaturan" onClose={() => setModalOpen(false)}>
-          <section className="flex-col h-full my-5 flex xl:flex-row max-w-screen-xl mx-auto px-4">
+          <section className="flex-col h-full  flex xl:flex-row max-w-screen-xl mx-auto px-4">
             <SidebarProfileDashboard
               data={adminData || mitraData}
               setMenuOpen={setMenuOpen}

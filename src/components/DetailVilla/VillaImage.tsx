@@ -1,9 +1,12 @@
 import React from "react";
 import Image from "next/image";
 
+interface Image {
+  url: string;
+}
 interface VillaImageProps {
-  foto_villa: any;
-  openModal: any;
+  foto_villa: Image[];
+  openModal: (index: number) => void;
 }
 
 const VillaImage = ({ foto_villa, openModal }: VillaImageProps) => {
@@ -28,7 +31,7 @@ const VillaImage = ({ foto_villa, openModal }: VillaImageProps) => {
         />
       </div>
       <div className="flex space-x-4 mt-4 overflow-x-auto scrollbar-hide">
-        {foto_villa.slice(0, 4).map((foto: any, index: number) => (
+        {foto_villa.slice(0, 4).map((foto: Image, index: number) => (
           <Image
             key={index}
             src={foto.url || "/assets/images/villa-gitah.png"}
